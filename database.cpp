@@ -154,7 +154,6 @@ bool DataBase::save(const string &filename)
     ofstream fout(filename);
     if (!fout)
         return false;
-    cout << kv_.size() << endl;
     for (auto &[key, record] : kv_)
     {
         if (isExpiredLocked(record))
