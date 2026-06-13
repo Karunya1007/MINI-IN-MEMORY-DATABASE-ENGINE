@@ -229,6 +229,7 @@ Example:
 snapshot.db
 
 name "Karunya" -1
+
 age "20" -1
 
 Snapshots are generated through:
@@ -246,11 +247,17 @@ The Write-Ahead Log (WAL) records every database modification("SET" and "DEL") t
 Example:
 
 SAVE snapshot.db
+
 BEGIN
+
 SET newkey 25
+
 GET newkey
+
 NULL
+
 COMMIT
+
 (suppose process is killed at this moment)
 
 wal.log
@@ -266,8 +273,11 @@ The WAL enables recovery if the program crashes before a new snapshot is generat
 Example:
 
 BEGIN
+
 SET name Karunya
+
 SET age 20
+
 COMMIT
 
 Before COMMIT:
@@ -284,7 +294,9 @@ After COMMIT:
 Example rollback:
 
 BEGIN
+
 SET city Chennai
+
 ROLLBACK
 
 The database remains unchanged.
@@ -326,8 +338,11 @@ load(snapshot.db) -> replay(wal.log) -> database restored
 # Build Instructions
 
 Using g++:
+
 g++ -std=c++17 main.cpp database.cpp parser.cpp wal.cpp transaction.cpp -o minidb.exe
+
 Run:
+
 ./minidb.exe
 
 ---
@@ -335,17 +350,29 @@ Run:
 # Example Usage
 
 SET name Karunya
+
 GET name
+
 Karunya
+
 SET age 20 TTL 10
+
 GET age
+
 20
+
 BEGIN
+
 SET name Adwaith
+
 COMMIT
+
 GET name
+
 Adwaith
+
 GET age (Assume this operation is done atleast 30 seconds after the SET age operation)
+
 NULL
 
 ---
